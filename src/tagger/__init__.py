@@ -5,7 +5,7 @@ from src.tagger.utils import load_model, load_model_and_tokenizer, load_model_an
 from src.tagger.decoder import decoder
 
 
-from src.tagger.data import load_train_test_split, BIOTagger, SelectModelInputs, EvaluationDataCollator, load_inference_data, ID2LABEL_ENTITY
+from src.data import load_train_test_split, BIOTagger, SelectModelInputs, EvaluationDataCollator, load_inference_data, ID2LABEL_ENTITY
 
 from torch.utils.data import DataLoader
 import torch
@@ -53,9 +53,7 @@ def remove_txt(data):
     return new_data
 
 class Tagger:
-    def __init__(self, checkpoint, output_folder) -> None:
-        
-        self.output_folder = output_folder
+    def __init__(self, checkpoint, output_file, batch_size) -> None:
         
         # load model
         device="cpu"
@@ -64,12 +62,19 @@ class Tagger:
             #single GPU bc CRF
             assert torch.cuda.device_count()==1, "CRF is not prepared to run as SPMD."
 
+        self.output_file = output_file
+        self.batch_size = batch_size
         self.device = device
         self.model, self.tokenizer, self.config = load_model_and_tokenizer_locally(checkpoint)
         self.model = self.model.to(device)
 
         self.tokenizer.model_max_length = 512
 
+    def __str__(self):
+        return "Tagger"
+    
+    def __repr__(self) -> str:
+        return self.__str__()
         
     def run(self, testset):
         
@@ -79,7 +84,7 @@ class Tagger:
                                                 padding=True,
                                                 label_pad_token_id=self.tokenizer.pad_token_id)
     
-        dl = DataLoader(test_ds, batch_size=8, collate_fn=eval_datacollator)
+        dl = DataLoader(test_ds, batch_size=self.batch_size, collate_fn=eval_datacollator)
     
         outputs = []
         for train_batch in tqdm(dl):
@@ -126,15 +131,8 @@ class Tagger:
                 # annotations in title
                 
                 # annotations in abstract
-            
-        fOut_name = "-".join(checkpoint.split("/")[-2:])
         
-
-        #with open(os.path.join(out_folder,f"{fOut_name}.json"),"w") as fOut:
-        #    fOut.write(json.dumps(predicted_entities))
-
-        with open(os.path.join(out_folder,f"{fOut_name}.json"),"w") as fOut:
+        with open(self.output_file, "w") as fOut:
             json.dump(testdata, fOut, indent=2)
-    
-if __name__ == '__main__':
-    main()
+
+        return self.output_file

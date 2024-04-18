@@ -5,7 +5,7 @@ import pandas as pd
 import random
 import math
 
-from utils import split_chunks, RangeDict
+from src.utils import split_chunks, RangeDict
 from collections import defaultdict
 
 from transformers import AutoTokenizer, DataCollatorForTokenClassification

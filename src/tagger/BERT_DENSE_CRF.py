@@ -6,7 +6,7 @@ from transformers.modeling_outputs import  TokenClassifierOutput
 from torch import nn
 from torch.nn import CrossEntropyLoss
 import torch
-from layers.CRF import CRF
+from src.tagger.layers.CRF import CRF
 from itertools import islice
 
 
