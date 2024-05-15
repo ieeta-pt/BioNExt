@@ -46,7 +46,6 @@ The embeddings created by SAPBERT can be found [here](https://zenodo.org/records
 - `--extractor.checkpoint`: Path to the checkpoint of the extractor module.
 
 
-The code is designed to work in a modular fashion, hwere each aspect (tagger, linker, extractor) can be run in isolation. With regards to the linker
-<!-- Please ensure all necessary dependencies are installed and paths are correctly configured before running the script. -->
+The code is designed to work in a modular fashion, here each aspect (tagger, linker, extractor) can be run in isolation. With regards to the linker
 
 
