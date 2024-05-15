@@ -1,9 +1,29 @@
 import json
+import requests
+import os
+
 
 def split_chunks(a, n):
     k, m = divmod(len(a), n)
     return (a[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n))
 
+def download_article_pmid(pmid, folder="testset"):
+    url = f"https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pubmed.cgi/BioC_json/{pmid}/unicode"
+    
+    # Send a GET request to the API
+    response = requests.get(url)
+    
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Return JSON content
+        _out_filename = os.path.join(folder, f"pubmed_{pmid}.json")
+        with open(_out_filename, "w") as file:
+            json.dump(response.json()[0], file, indent=2)
+        return _out_filename
+    else:
+        # Handle errors (you could customize this part according to your needs)
+        raise RuntimeError(f"Failed to fetch article (PMID: {pmid}) status:{response.status_code}")
+    
 def load_biocjson(file_path):
     #load the file as json
     

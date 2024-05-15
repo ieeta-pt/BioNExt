@@ -1,8 +1,8 @@
 
 import argparse
 from src import grouping_args
-from src.utils import load_biocjson
-
+from src.utils import load_biocjson, download_article_pmid
+import os
 
 if __name__ == "__main__":
     
@@ -23,13 +23,16 @@ if __name__ == "__main__":
     ### tagger options
     tagger_configs = parser.add_argument_group('Tagger settings', 'This settings are related to the indexer module.')
     tagger_configs.add_argument('--tagger.checkpoint', \
-                                 type=str, default="trained_models/tagger/BioLinkBERT-large-dense-60-2-unk-P0.25-0.75-42-full/checkpoint-1200", \
+                                 type=str, default="IEETA/BioNExt-Tagger", \
+                                 help='')
+    tagger_configs.add_argument('--tagger.trained_model_path', \
+                                 type=str, default="trained_models/tagger", \
                                  help='')
     tagger_configs.add_argument('--tagger.batch_size', \
                                  type=int, default=8, \
                                  help='')
-    tagger_configs.add_argument('--tagger.output_file', \
-                                 type=str, default="outputs/tagger/predicts.json", \
+    tagger_configs.add_argument('--tagger.output_folder', \
+                                 type=str, default="outputs/tagger", \
                                  help='')
     
     ## linker options
@@ -46,17 +49,20 @@ if __name__ == "__main__":
     linker_configs.add_argument('--linker.dataset_folder', \
                                  default="dataset/", \
                                  help='')
-    linker_configs.add_argument('--linker.output_file', \
-                                 default="outputs/linker/predicts.json", \
+    linker_configs.add_argument('--linker.output_folder', \
+                                 default="outputs/linker", \
                                  help='')
     
     # extractor options
     extractor_configs = parser.add_argument_group('Extractor settings', 'This settings are related to the extractor module.')
-    extractor_configs.add_argument('--extractor.output_file', \
-                                 type=str, default="outputs/extractor/predicts.json", \
+    extractor_configs.add_argument('--extractor.output_folder', \
+                                 type=str, default="outputs/extractor", \
                                  help='The extractor outputs path')
     extractor_configs.add_argument('--extractor.checkpoint', \
-                                 type=str, default="trained_models/extractor/biolinkbert-large-full-mha-both-3-32456-20-mask-False/checkpoint-17340", \
+                                 type=str, default="IEETA/BioNExt-Extractor", \
+                                 help='')
+    extractor_configs.add_argument('--extractor.trained_model_path', \
+                                 type=str, default="trained_models/extractor", \
                                  help='')
     extractor_configs.add_argument('--extractor.batch_size', \
                                  type=int, default=128, \
@@ -95,6 +101,17 @@ if __name__ == "__main__":
     
     print("Running")
     input_file = args.source_file
+    
+    if os.path.splitext(args.source_file)[1]==".json":
+        # lets assume that its a bioCjson file
+        input_file = args.source_file
+    elif args.source_file.startswith("PMID:"):
+        input_file = download_article_pmid(args.source_file[5:])
+    else:
+        raise RuntimeError("Please specify a valid bioCjson file or a valid PMID as (PMID:{identifier})")
+    
+    #print("input_file", input_file)
+    
     for module in pipeline:
         input_file = module.run(input_file)
     

@@ -1,7 +1,6 @@
 from transformers import AutoConfig, AutoTokenizer, DataCollatorForTokenClassification, AutoModelForMaskedLM,AutoModel
 
 
-from src.tagger.utils import load_model, load_model_and_tokenizer, load_model_and_tokenizer_locally
 from src.tagger.decoder import decoder
 
 
@@ -53,7 +52,7 @@ def remove_txt(data):
     return new_data
 
 class Tagger:
-    def __init__(self, checkpoint, output_file, batch_size) -> None:
+    def __init__(self, checkpoint, trained_model_path, output_folder, batch_size) -> None:
         
         # load model
         device="cpu"
@@ -62,10 +61,16 @@ class Tagger:
             #single GPU bc CRF
             assert torch.cuda.device_count()==1, "CRF is not prepared to run as SPMD."
 
-        self.output_file = output_file
+        self.output_folder = output_folder
         self.batch_size = batch_size
         self.device = device
-        self.model, self.tokenizer, self.config = load_model_and_tokenizer_locally(checkpoint)
+        self.model = AutoModel.from_pretrained(checkpoint, 
+                                               trust_remote_code=True,
+                                               cache_dir=trained_model_path)
+        self.config = self.model.config
+        self.tokenizer = AutoTokenizer.from_pretrained(checkpoint,
+                                                       cache_dir=trained_model_path)
+        #self.model, self.tokenizer, self.config = load_model_and_tokenizer_locally(checkpoint, trained_model_path)
         self.model = self.model.to(device)
 
         self.tokenizer.model_max_length = 512
@@ -132,7 +137,8 @@ class Tagger:
                 
                 # annotations in abstract
         
-        with open(self.output_file, "w") as fOut:
+        output_filename = os.path.join(self.output_folder, os.path.basename(testset))
+        with open(output_filename, "w") as fOut:
             json.dump(testdata, fOut, indent=2)
 
-        return self.output_file
+        return output_filename

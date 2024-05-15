@@ -5,10 +5,10 @@ import numpy as np
 from tqdm import tqdm
 from collections import defaultdict
 
+from transformers import AutoModel, AutoTokenizer
 from src.extractor.data import load_data, DocumentReaderDatasetForTraining
-from src.extractor.utils import load_model_local
-from src.extractor.collator import DataCollatorForRelationClassification, DataCollatorForRelationAndNovelClassification, DataCollatorForInference
-
+from src.extractor.collator import DataCollatorForInference
+import os
 
 def load_data_for_inference(file_path,
                               tokenizer,
@@ -38,14 +38,21 @@ def load_data_for_inference(file_path,
 
 class Extractor:
     
-    def __init__(self, checkpoint, output_file, batch_size) -> None:
-        self.output_file = output_file
+    def __init__(self, checkpoint, trained_model_path, output_folder, batch_size) -> None:
+        self.output_folder = output_folder
         self.batch_size = batch_size
         
-        self.model, self.tokenizer, self.config = load_model_local(checkpoint, "cuda")
+        #self.model, self.tokenizer, self.config = load_model_local(checkpoint, "cuda")
+        self.model = AutoModel.from_pretrained(checkpoint, 
+                                               trust_remote_code=True,
+                                               cache_dir=trained_model_path)
+        self.config = self.model.config
+        self.tokenizer = AutoTokenizer.from_pretrained(checkpoint,
+                                                       cache_dir=trained_model_path)
+        
         self.model = self.model.to("cuda")
         # comment this, when models have this specified
-        self.config.tokenizer_special_tokens = ['[s1]','[e1]', '[s2]','[e2]' ] 
+        #self.config.tokenizer_special_tokens = ['[s1]','[e1]', '[s2]','[e2]' ] 
          
 
 
@@ -125,11 +132,13 @@ class Extractor:
                 
             data['documents'][i]['relations'] = rel
         #output
-        print("writing to", self.output_file)
-        with open(self.output_file, "w") as fOut:
+        output_filename = os.path.join(self.output_folder, os.path.basename(testset))
+
+        print("writing to", output_filename)
+        with open(output_filename, "w") as fOut:
             json.dump(data, fOut, indent=2)
         
-        return testset
+        return output_filename
     
     def __str__(self):
         return "Extractor"
