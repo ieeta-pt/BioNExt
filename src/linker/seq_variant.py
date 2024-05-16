@@ -354,8 +354,8 @@ def run_seq_variant(testset, output_file, dataset_folder, kb_folder, llm_call):
     
     llm_predict = build_ollama_predictor(embeddings, data_set_train, 0.6)
     
-    with open(f'{kb_folder}/NCBI-Gene/gene_lookup.json', 'r') as f:
-        gene_lookup = json.load(f)
+    #with open(f'{kb_folder}/NCBI-Gene/gene_lookup.json', 'r') as f:
+    #    gene_lookup = json.load(f)
         
     with open(f'{kb_folder}/dbSNP/variant_api_results.json', 'r') as f:
         variant_lookup = json.load(f)

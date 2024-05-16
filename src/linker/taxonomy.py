@@ -12,21 +12,27 @@ import numpy as np
 from tqdm import tqdm
 
 def load_taxonomy(input = '/home/biocreative/BioCreativeVIII_Track1/knowledge-resources/NCBI-Taxonomy/names.dmp'):
-    names = []
-    unique_names = []
+    # og code used /home/biocreative/BioCreativeVIII_Track1/knowledge-resources/NCBI-Taxonomy/names.dmp
+    #names = []
+    #unique_names = []
 
+
+    #with open(input) as f:
+    #    for line in f.readlines():
+            # line = f.readline()
+    #        fields = line.strip().split('\t|\t')
+    #        fields[-1] = fields[-1].rstrip('\t|\n')
+    #        tax_id, name_txt, unique_name, name_class = fields
+    #        names.append({'id': tax_id, 'text': name_txt.lower(), 'class':name_class})
+    #        if unique_name != '':
+    #            unique_names.append({'id': tax_id, 'text': unique_name.lower(), 'class':name_class})
+
+    #    return names, unique_names
 
     with open(input) as f:
-        for line in f.readlines():
-            # line = f.readline()
-            fields = line.strip().split('\t|\t')
-            fields[-1] = fields[-1].rstrip('\t|\n')
-            tax_id, name_txt, unique_name, name_class = fields
-            names.append({'id': tax_id, 'text': name_txt.lower(), 'class':name_class})
-            if unique_name != '':
-                unique_names.append({'id': tax_id, 'text': unique_name.lower(), 'class':name_class})
+        names = [x for x in map(json.loads, f)]
 
-        return names, unique_names
+    return names, None
 
 def build_direct_lookup_function(data_dict, transform_entity):
     def _lookup(entity):
@@ -45,7 +51,7 @@ def run_taxonomy(testset, output_file, dataset_folder, kb_folder):
     
     test_run = load_data(testset)
     training_direct_match = {entity["text"]:entity["linked_id"] for doc in training_data for entity in doc["entities"] if entity["label"] == "OrganismTaxon" or entity["label"] == "Organism"}
-    names, unique_names = load_taxonomy(os.path.join(kb_folder, "NCBI-Taxonomy","names.dmp"))
+    names, unique_names = load_taxonomy(os.path.join(kb_folder, "NCBI-Taxonomy","names.jsonl"))
     
     taxonomy_dict = defaultdict(list)
     for x in names:
