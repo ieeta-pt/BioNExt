@@ -1,7 +1,12 @@
 dataset
 knowledge-bases
 testset
-
+BioNExtExtractor
+BioNExtTagger
+cache_llm_v5
+push_to_hub.ipynb
+test.ipynb
+trained_models/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
