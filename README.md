@@ -1,8 +1,20 @@
 # BioNExt
 
-This repository contains the implementation for the work as described in:
+This repository contains the implementation for the work **Towards Discovery: An End-to-End System for Uncovering Novel Biomedical Relations**
 
-**Towards Discovery: An End-to-End System for Uncovering Novel Biomedical Relations**
+# Table of Contents
+1. [How to Use](#how-to-use)
+   - [Install Dependencies](#install-dependencies)
+   - [Run the System (Inference)](#run-the-system-inference)
+   - [Select Which Modules to Run](#select-which-modules-to-run)
+   - [How to Use LLM for Sequence Variant Detection in the Linker](#how-to-use-llm-for-sequence-variant-detection-in-the-linker)
+2. [Complete Arguments Description](#complete-arguments-description)
+   - [Global Settings](#global-settings)
+   - [Tagger Settings](#tagger-settings)
+   - [Linker Settings](#linker-settings)
+   - [Extractor Settings](#extractor-settings)
+3. [Models](#models)
+4. [Authors](#authors)
 
 ## How to use
 
@@ -101,7 +113,7 @@ Our tagger and extractor models are integrated with the Hugging Face library and
 * tagger: https://huggingface.co/IEETA/BioNExt-Tagger
 * extractor: https://huggingface.co/IEETA/BioNExt-Extractor
 
-**Authors:**
+## **Authors:**
 
 - Tiago Almeida ([ORCID: 0000-0002-4258-3350](https://orcid.org/0000-0002-4258-3350))
 - Richard A A Jonker ([ORCID: 0000-0002-3806-6940](https://orcid.org/0000-0002-3806-6940))
