@@ -87,7 +87,7 @@
               "id": 4,
               "infons": {
                 "type": "GeneOrGeneProduct",
-                "identifier": "120879421"
+                "identifier": "119260649"
               },
               "text": "C7",
               "locations": [
@@ -129,7 +129,7 @@
               "id": 7,
               "infons": {
                 "type": "GeneOrGeneProduct",
-                "identifier": "120879421"
+                "identifier": "119260649"
               },
               "text": "C7",
               "locations": [
@@ -344,16 +344,16 @@
         {
           "id": "R0",
           "infons": {
-            "entity1": "120879421",
-            "entity2": "100689027",
-            "type": "Association",
+            "entity1": "119260649",
+            "entity2": "D016108",
+            "type": "Positive_Correlation",
             "novel": "No"
           }
         },
         {
           "id": "R1",
           "infons": {
-            "entity1": "D016108",
+            "entity1": "119260649",
             "entity2": "100689027",
             "type": "Association",
             "novel": "No"
@@ -362,9 +362,9 @@
         {
           "id": "R2",
           "infons": {
-            "entity1": "120879421",
+            "entity1": "100689027",
             "entity2": "D016108",
-            "type": "Positive_Correlation",
+            "type": "Association",
             "novel": "No"
           }
         }

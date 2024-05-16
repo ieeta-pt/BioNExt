@@ -357,8 +357,10 @@ def run_seq_variant(testset, output_file, dataset_folder, kb_folder, llm_call):
     #with open(f'{kb_folder}/NCBI-Gene/gene_lookup.json', 'r') as f:
     #    gene_lookup = json.load(f)
         
-    with open(f'{kb_folder}/dbSNP/variant_api_results.json', 'r') as f:
-        variant_lookup = json.load(f)
+    #with open(f'{kb_folder}/dbSNP/variant_api_results.json', 'r') as f:
+    #    variant_lookup = json.load(f)
+    # maybe use disk cache in here
+    variant_lookup = {}
     
     train_data_dict = defaultdict(lambda: defaultdict(lambda: set()))
     for doc in training_data:

@@ -347,8 +347,8 @@ def check_if_files_exist(folder_path, files_to_check):
     
     
     all_files_in_folder = set(list_files(folder_path))
-    if "dataset" in folder_path:
-        print("all_files_in_folder", all_files_in_folder)
+    #if "dataset" in folder_path:
+    #    print("all_files_in_folder", all_files_in_folder)
     missing_files = files_to_check - all_files_in_folder
 
     if missing_files:
