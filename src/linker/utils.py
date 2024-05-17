@@ -383,14 +383,40 @@ def maybe_download_dataset(dataset_path):
 def maybe_download_kb(kb_path):
     if check_if_files_exist(kb_path, files_to_check={
         os.path.join(kb_path,"Cellosaurus/concepts.jsonl"),
-        os.path.join(kb_path,"Cellosaurus/concepts_True_embeddings_sapBERT-multilanguage-large.npy"),
+        os.path.join(kb_path,"Cellosaurus/concepts_True_embeddings_sapBERT-multilanguage-large.npy")}):
+        print("Found all of the kb Cellosaurus files")
+    else:
+        print("Some Cellosaurus files missing (see above), proceeding to download")
+        os.makedirs(os.path.join(kb_path,"Cellosaurus"), exist_ok=True)
+        download_and_unzip_file("https://zenodo.org/records/11126786/files/Cellosaurus.zip?download=1",
+                                os.path.join(kb_path,"Cellosaurus.zip"))
+        
+    if check_if_files_exist(kb_path, files_to_check={
         os.path.join(kb_path,"CTD-diseases/concepts.jsonl"),
         os.path.join(kb_path,"CTD-diseases/concepts_True_embeddings_sapBERT-multilanguage-large.npy"),
         os.path.join(kb_path,"CTD-diseases/definitions.jsonl"),
         os.path.join(kb_path,"CTD-diseases/definitions_True_embeddings_sapBERT-multilanguage-large.npy"),
         os.path.join(kb_path,"CTD-diseases/synonyms.jsonl"),
-        os.path.join(kb_path,"CTD-diseases/synonyms_True_embeddings_sapBERT-multilanguage-large.npy"),
-        os.path.join(kb_path,"dbSNP/tmVar3/seqvariants.tsv"),
+        os.path.join(kb_path,"CTD-diseases/synonyms_True_embeddings_sapBERT-multilanguage-large.npy")}):
+        print("Found all of the kb CTD-diseases files")
+    else:
+        print("Some CTD-diseases files missing (see above), proceeding to download")
+        os.makedirs(os.path.join(kb_path,"CTD-diseases"), exist_ok=True)
+        download_and_unzip_file("https://zenodo.org/records/11126786/files/CTD-diseases.zip?download=1",
+                                os.path.join(kb_path,"CTD-diseases.zip"))
+    
+    if check_if_files_exist(kb_path, files_to_check={
+        os.path.join(kb_path,"dbSNP/tmVar3/seqvariants.tsv")}):
+        print("Found all of the kb dbSNP (tmVar3) files")
+    else:
+        print("Some dbSNP (tmVar3) files missing (see above), proceeding to download")
+        os.makedirs(os.path.join(kb_path,"dbSNP/tmVar3"), exist_ok=True)
+        text_file_url = "https://ftp.ncbi.nlm.nih.gov/pub/lu/tmVar3/tmVar3Corpus.txt"
+        download_file(text_file_url, os.path.join(kb_path,"dbSNP/tmVar3/tmVar3Corpus.txt"))
+        convert_tmvar3_corpus_to_tsv(os.path.join(kb_path,"dbSNP/tmVar3/tmVar3Corpus.txt"),
+                                     os.path.join(kb_path,"dbSNP/tmVar3/seqvariants.tsv"))
+    
+    if check_if_files_exist(kb_path, files_to_check={
         os.path.join(kb_path,"MeSH/concepts.jsonl"),
         os.path.join(kb_path,"MeSH/concepts_True_embeddings_sapBERT-multilanguage-large.npy"),
         os.path.join(kb_path,"MeSH/concepts-supp.jsonl"),
@@ -400,7 +426,15 @@ def maybe_download_kb(kb_path):
         os.path.join(kb_path,"MeSH/definitions-supp.jsonl"),
         os.path.join(kb_path,"MeSH/definitions-supp_True_embeddings_sapBERT-multilanguage-large.npy"),
         os.path.join(kb_path,"MeSH/synonyms.jsonl"),
-        os.path.join(kb_path,"MeSH/synonyms_True_embeddings_sapBERT-multilanguage-large.npy"),
+        os.path.join(kb_path,"MeSH/synonyms_True_embeddings_sapBERT-multilanguage-large.npy")}):
+        print("Found all of the kb MeSH files")
+    else:
+        print("Some MeSH files missing (see above), proceeding to download")
+        os.makedirs(os.path.join(kb_path,"MeSH"), exist_ok=True)
+        download_and_unzip_file("https://zenodo.org/records/11126786/files/MeSH.zip?download=1",
+                                os.path.join(kb_path,"MeSH.zip"))
+    
+    if check_if_files_exist(kb_path, files_to_check={
         os.path.join(kb_path,"NCBI-Gene/embeddings/3702_.jsonl"),
         os.path.join(kb_path,"NCBI-Gene/embeddings/3702__True_embeddings_sapBERT-multilanguage-large.npy"),
         os.path.join(kb_path,"NCBI-Gene/embeddings/7955_.jsonl"),
@@ -416,37 +450,20 @@ def maybe_download_kb(kb_path):
         os.path.join(kb_path,"NCBI-Gene/embeddings/12814_.jsonl"),
         os.path.join(kb_path,"NCBI-Gene/embeddings/12814__True_embeddings_sapBERT-multilanguage-large.npy"),
         os.path.join(kb_path,"NCBI-Gene/genes_with_tax.pickle"),
-        os.path.join(kb_path,"NCBI-Gene/gene_lookup.json"),
-        os.path.join(kb_path,"NCBI-Taxonomy/names.jsonl"),
-        os.path.join(kb_path,"NCBI-Taxonomy/names_True_embeddings_sapBERT-multilanguage-large.npy"),
-    }):
-        print("Found all of the kb files")
+        os.path.join(kb_path,"NCBI-Gene/gene_lookup.json")}):
+        print("Found all of the kb NCBI-Gene files")
     else:
-        print("Some KB files missing (see above), proceeding to download")
-        
-        os.makedirs(os.path.join(kb_path,"Cellosaurus"), exist_ok=True)
-        os.makedirs(os.path.join(kb_path,"CTD-diseases"), exist_ok=True)
-        os.makedirs(os.path.join(kb_path,"dbSNP/tmVar3"), exist_ok=True)
-        os.makedirs(os.path.join(kb_path,"MeSH"), exist_ok=True)
+        print("Some NCBI-Gene files missing (see above), proceeding to download")
         os.makedirs(os.path.join(kb_path,"NCBI-Gene/embeddings"), exist_ok=True)
-        os.makedirs(os.path.join(kb_path,"NCBI-Taxonomy"), exist_ok=True)
-    
-    
-        # URL for the text file
-        text_file_url = "https://ftp.ncbi.nlm.nih.gov/pub/lu/tmVar3/tmVar3Corpus.txt"
-        download_file(text_file_url, os.path.join(kb_path,"dbSNP/tmVar3/tmVar3Corpus.txt"))
-        convert_tmvar3_corpus_to_tsv(os.path.join(kb_path,"dbSNP/tmVar3/tmVar3Corpus.txt"),
-                                     os.path.join(kb_path,"dbSNP/tmVar3/seqvariants.tsv"))
-        
-        
-        # URL for the zipped file archive
-        download_and_unzip_file("https://zenodo.org/records/11126786/files/Cellosaurus.zip?download=1",
-                                os.path.join(kb_path,"Cellosaurus.zip"))
-        download_and_unzip_file("https://zenodo.org/records/11126786/files/CTD-diseases.zip?download=1",
-                                os.path.join(kb_path,"CTD-diseases.zip"))
-        download_and_unzip_file("https://zenodo.org/records/11126786/files/MeSH.zip?download=1",
-                                os.path.join(kb_path,"MeSH.zip"))
-        download_and_unzip_file("https://zenodo.org/records/11204409/files/NCBI-Gene.zip?download=1",
+        download_and_unzip_file("https://zenodo.org/records/11204890/files/NCBI-Gene.zip?download=1",
                                 os.path.join(kb_path,"NCBI-Gene.zip"))
+    
+    if check_if_files_exist(kb_path, files_to_check={
+        os.path.join(kb_path,"NCBI-Taxonomy/names.jsonl"),
+        os.path.join(kb_path,"NCBI-Taxonomy/names_True_embeddings_sapBERT-multilanguage-large.npy")}):
+        print("Found all of the NCBI-Taxonomy files")
+    else:
+        print("Some NCBI-Taxonomy files missing (see above), proceeding to download")
+        os.makedirs(os.path.join(kb_path,"NCBI-Taxonomy"), exist_ok=True)
         download_and_unzip_file("https://zenodo.org/records/11126786/files/NCBI-Taxonomy.zip?download=1",
                                 os.path.join(kb_path,"NCBI-Taxonomy.zip"))
