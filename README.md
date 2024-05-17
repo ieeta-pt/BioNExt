@@ -109,7 +109,6 @@ Settings specific to the extractor module:
 
 These options allow you to customize the execution of the pipeline to suit your specific needs, whether running the full suite of tools or individual components.
 
-```markdown
 ## How to Train
 
 ### Tagger Model
@@ -135,7 +134,6 @@ The `hf_training.py` script allows for several arguments to customize the traini
 - `--epochs`: Number of training epochs (default: 30).
 - `--batch`: Batch size for training (default: 8).
 - `--random_seed`: Random seed for reproducibility (default: 42).
-
 
 #### Dataset
 By default we are using the datasets under the `dataset` folder. In case that its empty consider running our system in inference mode (see above), since it will automaticly download the BioRED dataset used for this work.
