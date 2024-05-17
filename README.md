@@ -8,16 +8,12 @@ This repository contains the implementation for the work **Towards Discovery: An
    - [Run the System (Inference)](#run-the-system-inference)
    - [Select Which Modules to Run](#select-which-modules-to-run)
    - [How to Use LLM for Sequence Variant Detection in the Linker](#how-to-use-llm-for-sequence-variant-detection-in-the-linker)
-2. [Complete Arguments Description](#complete-arguments-description)
-   - [Global Settings](#global-settings)
-   - [Tagger Settings](#tagger-settings)
-   - [Linker Settings](#linker-settings)
-   - [Extractor Settings](#extractor-settings)
-3. [How to train](#how-to-train)
+   - [Complete Arguments Description](#complete-arguments-description)
+2. [How to train](#how-to-train)
    - [Tagger Model](#tagger-model)
    - [Extractor Model](#extractor-model)
-4. [Models](#models)
-5. [Authors](#authors)
+3. [Models](#models)
+4. [Authors](#authors)
 
 ## How to use
 
@@ -76,23 +72,23 @@ To utilize LLMs in the pipeline:
    ```bash
    python main.py PMID:36516090 --linker.llm_api.address http://IP:PORT --linker.llm_api.module OllamaAPICall
    ```
-## Complete Arguments Description
+### Complete Arguments Description
 
-### Global Settings
+#### Global Settings
 These settings relate to the general configuration of the pipeline:
 - `source_file`: Path to the input file, either a BIOC JSON or a PubMed ID prefixed with `PMID:`.
 - `-t`, `--tagger`: Enable the tagger module.
 - `-l`, `--linker`: Enable the linker module.
 - `-e`, `--extractor`: Enable the extractor module.
 
-### Tagger Settings
+#### Tagger Settings
 Settings specific to the tagger module:
 - `--tagger.checkpoint`: Path or identifier for the tagger model checkpoint (default: "IEETA/BioNExt-Tagger").
 - `--tagger.trained_model_path`: Directory to where the tagger will be downloaded (default: "trained_models/tagger").
 - `--tagger.batch_size`: Batch size for processing (default: 8).
 - `--tagger.output_folder`: Directory for saving output from the tagger (default: "outputs/tagger").
 
-### Linker Settings
+#### Linker Settings
 Settings specific to the linker module:
 - `--linker.llm_api.module`: Module for the LLM API (default: None).
 - `--linker.llm_api.address`: Address for the LLM API (default: None).
@@ -100,7 +96,7 @@ Settings specific to the linker module:
 - `--linker.dataset_folder`: Directory to where the datasets will be downloaded (default: "dataset/").
 - `--linker.output_folder`: Directory for saving output from the linker (default: "outputs/linker").
 
-### Extractor Settings
+#### Extractor Settings
 Settings specific to the extractor module:
 - `--extractor.output_folder`: Directory for saving output from the extractor (default: "outputs/extractor").
 - `--extractor.checkpoint`: Path or identifier for the extractor model checkpoint (default: "IEETA/BioNExt-Extractor").
