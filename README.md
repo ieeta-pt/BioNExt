@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ### Run the System (inference)
 
 
-The main entry point for our system is the `main.py` script. This script enables you to run the entire pipeline on your documents or datasets. Additionally, you can choose to execute specific modules, such as tagging or extraction, as needed.
+The main entry point for our system is the `main.py` script. This script enables you to run the entire pipeline on your documents or datasets. Additionally, you can choose to execute specific modules, such as tagger, linker or extractor.
 
 For example, if you wish to process the BC8 BioRED track test set, simply provide the respective test set in BioC JSON format:
 ```bash
