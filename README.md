@@ -13,8 +13,11 @@ This repository contains the implementation for the work **Towards Discovery: An
    - [Tagger Settings](#tagger-settings)
    - [Linker Settings](#linker-settings)
    - [Extractor Settings](#extractor-settings)
-3. [Models](#models)
-4. [Authors](#authors)
+3. [How to train](#how-to-train)
+   - [Tagger Model](#tagger-model)
+   - [Extractor Model](#extractor-model)
+4. [Models](#models)
+5. [Authors](#authors)
 
 ## How to use
 
@@ -105,6 +108,39 @@ Settings specific to the extractor module:
 - `--extractor.batch_size`: Batch size for processing (default: 128).
 
 These options allow you to customize the execution of the pipeline to suit your specific needs, whether running the full suite of tools or individual components.
+
+```markdown
+## How to Train
+
+### Tagger Model
+
+The training environment for the Tagger model is set up under the `src/tagger` directory. To begin training, navigate to this directory and use the `hf_training.py` script as the main entry point. This script is built upon the Hugging Face `Trainer` API, allowing for straightforward model training with BERT architectures.
+
+#### Training Command
+To start the training process, use the following command:
+
+```bash
+cd src/tagger
+python hf_training.py michiyasunaga/BioLinkBERT-base --augmentation unk --context 64
+```
+
+#### Parameters Description
+The `hf_training.py` script allows for several arguments to customize the training process:
+
+- **Model Checkpoint**: The first parameter specifies the pre-trained BERT model checkpoint to use as a starting point. In this example, `michiyasunaga/BioLinkBERT-base` is used.
+- `--augmentation`: The type of data augmentation to apply (default: None). (unk and random are the options)
+- `--p_augmentation`: Probability of applying augmentation on a per-example basis (default: 0.5).
+- `--percentage_tags`: The percentage of tags (>0) to be augmented per sample (default: 0.2).
+- `--context`: Length of the context window (default: 64 tokens).
+- `--epochs`: Number of training epochs (default: 30).
+- `--batch`: Batch size for training (default: 8).
+- `--random_seed`: Random seed for reproducibility (default: 42).
+
+
+#### Dataset
+By default we are using the datasets under the `dataset` folder. In case that its empty consider running our system in inference mode (see above), since it will automaticly download the BioRED dataset used for this work.
+
+### Extractor Model
 
 ## Models
 
