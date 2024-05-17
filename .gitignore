@@ -7,6 +7,8 @@ cache_llm_v5
 push_to_hub.ipynb
 test.ipynb
 trained_models/*
+src/.api
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
