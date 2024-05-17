@@ -32,14 +32,14 @@ pip install -r requirements.txt
 
 ### Run the System (inference)
 
-The main entry point for our system is the `main.py` script. This script allows you to run the entire pipeline on your documents or datasets. You can also choose to run specific modules, such as tagging or extraction, if needed.
 
-To process a local dataset or document, which must be in BioC JSON format, use the following command. This command will run the complete pipeline on the specified dataset, utilizing all enabled modules (tagger, linker, and extractor by default).
+The main entry point for our system is the `main.py` script. This script enables you to run the entire pipeline on your documents or datasets. Additionally, you can choose to execute specific modules, such as tagging or extraction, as needed.
 
-
+For example, if you wish to process the BC8 BioRED track test set, simply provide the respective test set in BioC JSON format:
 ```bash
-python main.py dataset_in_bioc.json
+python main.py dataset/bc8_biored_task2_test.json
 ```
+Please note that the bc8_biored_task2_test.json file is not included in this repository. However, it can be easily obtained from the following link: [BC8 BioRED Subtask 2 Test Set](https://ftp.ncbi.nlm.nih.gov/pub/lu/BC8-BioRED-track/BC8_BioRED_Subtask2_Test_Set.zip).
 
 Alternatively, there is a simple API for running our pipeline on any article currently indexed on PubMed. Simply use the keyword PMID: followed by the article identifier:
 
