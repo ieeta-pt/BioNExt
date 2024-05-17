@@ -18,7 +18,7 @@ from trainer import JointTrainer
 from collator import DataCollatorForRelationClassification
 import numpy as np
 import evaluate
-from model.modeling_bionextextractor import BioNExtExtractorModel
+from model.modeling_bionextextractor import  get_model_class
 from model.configuration_bionextextractor import BioNExtExtractorConfig
 
 def compute_metrics_relations(p: EvalPrediction):
@@ -123,7 +123,7 @@ if __name__ == "__main__":
                                                     update_vocab = len(tokenizer))
 
 
-    model = BioNExtExtractorModel.from_pretrained(model_checkpoint, config=config)
+    model = get_model_class(config).from_pretrained(model_checkpoint, config=config)
     model.training_mode()
     
     metrics = [evaluate.load(m) for m in ["f1", "precision", "recall"]]

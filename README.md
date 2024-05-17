@@ -140,6 +140,31 @@ By default we are using the datasets under the `dataset` folder. In case that it
 
 ### Extractor Model
 
+The training setup for the Extractor model is similarly straightforward and utilizes the `hf_training.py` script under the `src/extractor` directory. This model is also trained using the Hugging Face `Trainer` API, tailored to handle the specific needs of relation extraction tasks in biomedical texts.
+
+#### Training Command
+To start training the Extractor model, navigate to the extractor directory and execute the following command:
+
+```bash
+cd src/extractor
+python hf_training.py michiyasunaga/BioLinkBERT-base --novel
+```
+
+#### Parameters Description
+The `hf_training.py` script for the Extractor model allows several arguments for customizing the training process:
+
+- **Model Checkpoint**: Specifies the pre-trained BERT model checkpoint to be used. In this case, `michiyasunaga/BioLinkBERT-base` is the chosen model.
+- `--arch`: Defines the architecture type for the model, with the default set to "mha" (multi-head attention). (bilstm is the other alternative)
+- `--index_type`: Specifies the type of indexing used in the model, defaulting to "both". ("s" and "e" are the other alternatives)
+- `--name`: Provides a unique name for identifying the training session or model version, default is None.
+- `--epochs`: Determines the number of training epochs, set to 30 by default.
+- `--batch`: Configures the batch size for training, default is 10.
+- `--random_seed`: Sets a random seed to ensure reproducibility, default is 42.
+- `--novel`: Enables joint training for relation and novelty detection. Activating this flag integrates novelty detection into the training process, enhancing the model's ability to distinguish between known and novel relations in the dataset.
+
+#### Dataset
+Ensure that the `dataset` folder contains the appropriate data before starting training. If the folder is empty, consider running the system in inference mode, which will automatically download the necessary BioRED dataset used for this work.
+
 ## Models
 
 Our tagger and extractor models are integrated with the Hugging Face library and can be accessed and used in isolation at:
