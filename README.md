@@ -41,7 +41,7 @@ python main.py dataset/bc8_biored_task2_test.json
 ```
 Please note that the bc8_biored_task2_test.json file is not included in this repository. However, it can be easily obtained from the following link: [BC8 BioRED Subtask 2 Test Set](https://ftp.ncbi.nlm.nih.gov/pub/lu/BC8-BioRED-track/BC8_BioRED_Subtask2_Test_Set.zip).
 
-Alternatively, there is a simple API for running our pipeline on any article currently indexed on PubMed. Simply use the keyword PMID: followed by the article identifier:
+Alternatively, there is a simple API for running our pipeline on any article currently indexed on PubMed. Simply use the keyword `PMID:{identifier}` followed by the article identifier:
 
 ```bash
 python main.py PMID:36516090
