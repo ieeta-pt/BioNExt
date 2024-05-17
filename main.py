@@ -71,7 +71,7 @@ if __name__ == "__main__":
 
     args = grouping_args(parser.parse_args())
     
-    print(args)
+    #print(args)
     if not args.use_tagger and \
        not args.use_linker and \
        not args.use_extractor:
