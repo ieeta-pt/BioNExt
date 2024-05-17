@@ -37,7 +37,7 @@ if __name__ == "__main__":
     else:
         model_out_name = f"{name}-{args.epochs}-{args.context}-{args.random_seed}"
     
-    training_args = TrainingArguments(output_dir=os.path.join("trained_models_ner", model_out_name),
+    training_args = TrainingArguments(output_dir=os.path.join("../../trained_models_ner", model_out_name),
                                         num_train_epochs=args.epochs,
                                         dataloader_num_workers=1,
                                         dataloader_pin_memory=True,

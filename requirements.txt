@@ -8,3 +8,4 @@ transformers==4.37.2
 diskcache==5.6.3
 requests==2.31.0
 scikit-learn==1.4.0
+evaluate==0.4.1
