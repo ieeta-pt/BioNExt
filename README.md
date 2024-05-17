@@ -60,7 +60,7 @@ By default, all modules are run if no flags are specified.
 
 ### How to Use LLM for Sequence Variant Detection in the Linker
 
-Using Large Language Models (LLMs) for sequence variant detection can be complex, so we've made this component optional to accommodate all users. If you have access to an LLM, you can leverage it by extending the `GenericAPICall` class and implementing the required logic in the `run` method, which sends a prompt to the LLM. The `OllamaAPICall.py` is an example of how to use our LLMs powered by OLLAMA.
+Using Large Language Models (LLMs) for sequence variant detection can be complex, so we've made this component optional to accommodate all users. If you have access to an LLM, you can leverage it by extending the `GenericAPICall` class and implementing the required logic in the `run` method, which sends a prompt to the LLM. The `OllamaAPICall.py` is an example of how to use the LLMs provided by OLLAMA.
 
 The integration of LLMs for sequence variant detection is entirely optional. Whether or not you configure the LLM component, sequence variant detection will always occur during linking by using direct matching techniques. This ensures that all users can benefit from essential functionality, even without LLM setup.
 
