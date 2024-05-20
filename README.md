@@ -32,16 +32,16 @@ pip install -r requirements.txt
 
 ### Run the System (inference)
 
-The main entry point for our system is the `main.py` script. This script allows you to run the entire pipeline on your documents or datasets. You can also choose to run specific modules, such as tagging or extraction, if needed.
 
-To process a local dataset or document, which must be in BioC JSON format, use the following command. This command will run the complete pipeline on the specified dataset, utilizing all enabled modules (tagger, linker, and extractor by default).
+The main entry point for our system is the `main.py` script. This script enables you to run the entire pipeline on your documents or datasets. Additionally, you can choose to execute specific modules, such as tagger, linker or extractor.
 
-
+For example, if you wish to process the BC8 BioRED track test set, simply provide the respective test set in BioC JSON format:
 ```bash
-python main.py dataset_in_bioc.json
+python main.py dataset/bc8_biored_task2_test.json
 ```
+Please note that the bc8_biored_task2_test.json file is not included in this repository. However, it can be easily obtained from the following link: [BC8 BioRED Subtask 2 Test Set](https://ftp.ncbi.nlm.nih.gov/pub/lu/BC8-BioRED-track/BC8_BioRED_Subtask2_Test_Set.zip).
 
-Alternatively, there is a simple API for running our pipeline on any article currently indexed on PubMed. Simply use the keyword PMID: followed by the article identifier:
+Alternatively, there is a simple API for running our pipeline on any article currently indexed on PubMed. Simply use the keyword `PMID:{identifier}` followed by the article identifier:
 
 ```bash
 python main.py PMID:36516090
@@ -60,9 +60,9 @@ By default, all modules are run if no flags are specified.
 
 ### How to Use LLM for Sequence Variant Detection in the Linker
 
-Using Large Language Models (LLMs) for sequence variant detection can be complex, so we've made this component optional to accommodate all users. If you have access to an LLM, you can leverage it by extending the `GenericAPICall` class and implementing the required logic in the `run` method, which sends a prompt to the LLM. The `OllamaAPICall.py` is an example of how to use our LLMs powered by OLLAMA.
+Using Large Language Models (LLMs) for sequence variant detection can be complex, so we've made this component optional to accommodate all users. If you have access to an LLM, you can leverage it by extending the `GenericAPICall` class and implementing the required logic in the `run` method, which sends a prompt to the LLM. The `OllamaAPICall.py` is an example of how to use the LLMs provided by OLLAMA.
 
-The integration of LLMs for sequence variant detection is entirely optional. Whether or not you configure the LLM component, sequence variant detection will always occur during linking by using direct matching techniques. This ensures that all users can benefit from essential functionality, even without LLM setup.
+The integration of LLMs for sequence variant detection is entirely optional. Whether or not you configure the LLM component, sequence variant detection will always occur during linking by using direct matching techniques. 
 
 #### Setup and Configuration
 To utilize LLMs in the pipeline:
