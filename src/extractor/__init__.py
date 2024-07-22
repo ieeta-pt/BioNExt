@@ -128,7 +128,7 @@ class Extractor:
                     rel.append({'id': f"R{counter}", 'infons':{'entity1': k[0],'entity2':k[1],'type':id2label[v[0][0]],'novel':id2labelNovel[v[0][1]], }})
                     counter += 1
                 else: 
-                    print("broken")
+                    print("Doc:",id,"does not contains relations.") 
                 
             data['documents'][i]['relations'] = rel
         #output
